@@ -1,0 +1,24 @@
+<ion-tabs class="tabs-positive tabs-icon-only">
+
+  <ion-tab title="My Lover" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline" ng-controller="HomeCtrl">
+	<ion-content>
+		<i class="ion-ios-heart" ng-class="distance"></i>
+	</ion-content>
+  </ion-tab>
+
+  <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline" ng-controller="SettingsCtrl">
+    <form ng-submit="save()">
+      <div class="list">
+		<div ng-show="error">{{error}}</div>
+        <label class="item item-input">
+          <span class="input-label">My lover's email</span>
+          <input type="text" ng-model="lover.email">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Log in</button>
+        </label>
+      </div>
+    </form>
+  </ion-tab>
+
+</ion-tabs>

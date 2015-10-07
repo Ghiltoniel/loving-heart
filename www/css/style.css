@@ -1,0 +1,42 @@
+.scroll {
+    height: 100%;
+}
+ 
+.ion-ios-heart {
+	position: absolute;
+    width: 100%;
+	display:inline-block;
+    top: 50%;
+	margin-top:-6rem;
+	text-align:center;
+	font-size: 10rem;
+	color:#f00;
+}
+
+.ion-ios-heart.very-close {
+    animation: heartbeat 0.3s infinite;
+}
+
+.ion-ios-heart.close {
+    animation: heartbeat 0.8s infinite;
+}
+
+.ion-ios-heart.medium {
+    animation: heartbeat 1.5s infinite;
+}
+
+.ion-ios-heart.far {
+    animation: heartbeat 2.5s infinite;
+}
+
+.ion-ios-heart.very-far {
+    animation: heartbeat 4s infinite;
+}
+
+@keyframes heartbeat {
+    0% { text-shadow: 0 0 50px #f00; }
+    25% { text-shadow: 0 0 0 #f00; }
+    50% { text-shadow: 0 0 50px #f00; }
+    75% { text-shadow: 0 0 0 #f00; }
+    100% { text-shadow: 0 0 50px #f00; }
+}
