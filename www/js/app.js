@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-var email, uid;
+var email, uid, loverId, loverEmail;
 angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', "firebase"])
 
 .run(function($ionicPlatform, $cordovaGeolocation) {
@@ -32,31 +32,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', "firebas
 		   email = authData.password.email;
 		   uid = authData.uid; 
 		   
-		   usersRef.child(uid).set({
+		   usersRef.child(uid).update({
 			 email: email
 		   });
 		}
-		
-		
-		firebaseRef.createUser({
-		  email    : "guillaume.jacquart@live.fr",
-		  password : "Ghiltoniel1"
-		}, function(error, userData) {
-		  if (error) {
-			console.log("Error creating user:", error);
-		  } else {
-		    }
-		  });
-		  
-		firebaseRef.createUser({
-		  email    : "rossi.chloe@gmail.com",
-		  password : "chloe"
-		}, function(error, userData) {
-		  if (error) {
-			console.log("Error creating user:", error);
-		  } else {
-		    }
-		  });
 		
 		var watchOptions = {
 			timeout : 3000,
@@ -71,7 +50,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', "firebas
 			function(position) {
 				var lat  = position.coords.latitude
 				var lng = position.coords.longitude
-				
 				
 				if(typeof(email) != 'undefined'){					
 					var geoFire = new GeoFire(usersRef.child(uid));
@@ -88,27 +66,36 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', "firebas
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-    .state('app.home', {
+    .state('login', {
+      url: '/login',
+      views: {
+        'login-tab': {
+          templateUrl: 'templates/login.html',
+          controller: 'LoginCtrl'
+        }
+      }
+    })
+	.state('app.home', {
       url: '/home',
       views: {
-        'menuContent': {
+        'home-tab': {
           templateUrl: 'templates/home.html',
           controller: 'HomeCtrl'
         }
       }
     })
-    .state('app.user', {
-      url: '/user/:user',
+    .state('app.settings', {
+      url: '/settings',
       views: {
-        'menuContent': {
-          templateUrl: 'templates/user.html',
-          controller: 'UserCtrl'
+        'settings-tab': {
+          templateUrl: 'templates/settings.html',
+          controller: 'SettingsCtrl'
         }
       }
     });

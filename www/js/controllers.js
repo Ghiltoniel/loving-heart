@@ -1,66 +1,18 @@
-angular.module('starter.controllers', [])
+var controllers = angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseArray) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseArray, $location, $state) {
 
   // Form data for the login modal
   var firebaseRef = new Firebase("https://lover-position.firebaseio.com/");		
-  
+    
   var authData = firebaseRef.getAuth();
   if (authData) {
 	   email = $scope.email = authData.password.email;
 	   uid = authData.uid; 
   }
   else{
-	  $scope.login();
+	$location.path('/login');
   }
-  
-  $scope.loginData = {};
-  $scope.user = email;
-  
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-	    var ref = new Firebase("https://lover-position.firebaseio.com/");
-		try{
-			ref.authWithPassword({
-			  email    : $scope.loginData.username,
-			  password : $scope.loginData.password
-			}, function(error, authData) {
-			  if (error) {
-				alert("Login Failed!" + error);
-			  } else {
-				email = $scope.loginData.username;
-				uid = authData.uid;
-			  }
-			});
-		}catch(e){
-			alert(e);
-		}
-    
-  };
 })
 
 .controller('HomeCtrl', function($scope, $cordovaGeolocation, $stateParams) {
@@ -72,16 +24,31 @@ angular.module('starter.controllers', [])
 	var firebaseRef = new Firebase("https://lover-position.firebaseio.com/");	
 	var meRef = firebaseRef.child('users/' + uid);
 	
+	$scope.loading = true;
+	
 	meRef.on("value", function(snapshot) {
 		if(!snapshot.val().loverId)
+		{
+			$scope.no_lover = true;
+			$scope.loading = false;
+			$scope.$apply();
 			return;
+		}
 		
-		var userRef = firebaseRef.child("users/" + snapshot.val().loverId);
+		$scope.no_lover = false;
+		$scope.loading = false;
+		$scope.$apply();
+		loverId = snapshot.val().loverId;
+		var userRef = firebaseRef.child("users/" + loverId);
 	
 		userRef.on("value", function(snapshot) {
-			$scope.user = snapshot.val().email;
+			$scope.user = loverEmail = snapshot.val().email;
 			var geoFire = new GeoFire(userRef);
 			geoFire.get('location').then(function(data) {
+				if(!data){
+					$scope.error = "Your lover has not yet set his location";
+					$scope.$apply();
+				}
 				var posOptions = {timeout: 10000, enableHighAccuracy: false};
 				
 				$cordovaGeolocation
@@ -104,14 +71,27 @@ angular.module('starter.controllers', [])
 	});	
 })
 
-.controller('SettingsCtrl', function($scope, $stateParams) {
+.controller('SettingsCtrl', function($scope, $stateParams, $location) {
 	
-	$scope.lover = {}
+	$scope.lover = {
+		email: loverEmail
+	};
+	
 	var firebaseRef = new Firebase("https://lover-position.firebaseio.com/");	
 	var userRef = firebaseRef.child('users/' + uid);
 	var usersRef = firebaseRef.child('users');
 	
+	userRef.on('value', function(snapshot){
+		if(snapshot.val()){
+			loverId = snapshot.val().loverId;
+		}
+	});
+	
 	$scope.save = function(){
+		if(!$scope.lover.email){
+			return;
+		}
+		
 		usersRef.orderByChild("email").startAt($scope.lover.email).limitToFirst(1).on("value", function(snapshot) {
 		  if(snapshot.hasChildren()){	
 			
@@ -124,6 +104,9 @@ angular.module('starter.controllers', [])
 				userRef.update({
 					 loverId: childSnapshot.key()
 				});	
+				
+				$location.path('/app/home')
+				$scope.$apply();
 			});	
 		  }
 		  else{
@@ -132,6 +115,11 @@ angular.module('starter.controllers', [])
 		  }
 		});	
 	}
+	
+	$scope.logout = function(){
+		firebaseRef.unauth();
+		$location.path('/login');
+	};
     
 })
 

@@ -1,0 +1,25 @@
+<ion-view view-title="{{user || 'Home'}}">  
+	<ion-content>
+		<div class="Aligner">
+		  <div class="Aligner-item">
+			<form ng-submit="save()" id="setting-form">
+			  <div class="list">
+				<label class="item item-input">
+				  <span class="input-label">My lover's email</span>
+				  <input type="text" ng-model="lover.email">
+				</label>
+				<label class="item item-input error" ng-show="error">
+				  <span class="input-label">{{error}}</span>
+				</label>
+				<label class="item">
+				  <button class="button button-positive icon-left ion-ios-download-outline pull-right" type="submit">Enregistrer</button>
+				</label>
+				<label class="item">
+				  <button class="button button-positive icon-left ion-ios-download-outline pull-right" ng-click="logout();">Logout</button>
+				</label>
+			  </div>
+			</form>
+		  </div>
+		</div>
+	</ion-content>
+</ion-view>

@@ -1,4 +1,11 @@
 {
   "name": "LoverPosition",
-  "app_id": "b6fa1a2b"
+  "app_id": "b6fa1a2b",
+  "browsers": [
+    {
+      "platform": "android",
+      "browser": "crosswalk",
+      "version": "12.41.296.5"
+    }
+  ]
 }

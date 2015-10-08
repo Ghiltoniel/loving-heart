@@ -1,42 +1,115 @@
+.tabs-top > .tabs{
+	background:transparent;
+	bottom:0;
+	top:initial;
+	border-top:1px solid rgba(255,255,255,0.5) !important;
+}
+
+.has-tabs-top{
+	top:0;
+	bottom: 50px;
+}
+
+.tab-content, #login{
+	background: url('/img/18.jpg') no-repeat;
+}
+
+#login .bar-header{
+	background-color:transparent;
+}
+
+#login .bar-header .title{	
+	color:white;
+}
+
+#login button{
+	border: 1px solid white;
+	background:none;
+}
+
+.tab-content .pane, .list .item{
+	background-color:transparent;
+	color:white;
+	border:none;
+}
+
+.input-label{
+	color:white;
+}
+
+.item-input > input{
+	border-color:white;
+	border-bottom: 1px solid white;
+	color:white;
+}
+
 .scroll {
     height: 100%;
 }
+
+.Aligner {
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    min-height: 100%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.Aligner-item {
+  text-align:center;
+}
+
+.tabs{
+	background-color: transparent;
+	color:white;
+	border:none;
+}
+
+#setting-form button{
+	background-color:transparent;
+	border-color:white;
+	float:right;
+}
+
+.error .input-label{
+	color:#f56;
+}
  
 .ion-ios-heart {
-	position: absolute;
-    width: 100%;
-	display:inline-block;
-    top: 50%;
-	margin-top:-6rem;
-	text-align:center;
-	font-size: 10rem;
-	color:#f00;
+	font-size: 15rem;
+	color:#f56;
 }
 
 .ion-ios-heart.very-close {
-    animation: heartbeat 0.3s infinite;
+    animation: heartbeat 0.5s infinite;
 }
 
 .ion-ios-heart.close {
-    animation: heartbeat 0.8s infinite;
+    animation: heartbeat 2s infinite;
 }
 
 .ion-ios-heart.medium {
-    animation: heartbeat 1.5s infinite;
+    animation: heartbeat 3s infinite;
 }
 
 .ion-ios-heart.far {
-    animation: heartbeat 2.5s infinite;
+    animation: heartbeat 5s infinite;
 }
 
 .ion-ios-heart.very-far {
-    animation: heartbeat 4s infinite;
+    animation: heartbeat 6s infinite;
 }
 
 @keyframes heartbeat {
-    0% { text-shadow: 0 0 50px #f00; }
-    25% { text-shadow: 0 0 0 #f00; }
-    50% { text-shadow: 0 0 50px #f00; }
-    75% { text-shadow: 0 0 0 #f00; }
-    100% { text-shadow: 0 0 50px #f00; }
+    0% { text-shadow: 0 0 80px #f00; }
+    50% { text-shadow: 0 0 0 #f00; }
+    100% { text-shadow: 0 0 80px #f00; }
 }
