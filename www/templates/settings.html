@@ -1,4 +1,4 @@
-<ion-view view-title="{{user || 'Home'}}">  
+<ion-view view-title="Home">  
 	<ion-content>
 		<div class="Aligner">
 		  <div class="Aligner-item">
@@ -6,19 +6,20 @@
 			  <div class="list">
 				<label class="item item-input">
 				  <span class="input-label">My lover's email</span>
-				  <input type="text" ng-model="lover.email">
+				  <input type="text" ng-model="lover.email" ng-change="$root.error_lover = ''">
 				</label>
-				<label class="item item-input error" ng-show="error">
-				  <span class="input-label">{{error}}</span>
-				</label>
-				<label class="item">
-				  <button class="button button-positive icon-left ion-ios-download-outline pull-right" type="submit">Enregistrer</button>
-				</label>
-				<label class="item">
-				  <button class="button button-positive icon-left ion-ios-download-outline pull-right" ng-click="logout();">Logout</button>
-				</label>
+				<div class="error" ng-show="$root.error_lover">
+				  {{$root.error_lover}}
+				</div>
+				<div class="logout">
+				  <ion-spinner ng-show="$root.loading"></ion-spinner>
+				  <button class="button button-positive icon-left ion-ios-checkmark-outline" type="submit">Enregistrer</button>
+				</div>
 			  </div>
 			</form>
+			<div class="logout">
+				<button type="button" name="fota" class="button button-positive icon-left ion-ios-download-outline" ng-click="logout();">Log out</button>
+			</div>
 		  </div>
 		</div>
 	</ion-content>

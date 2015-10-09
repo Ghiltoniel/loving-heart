@@ -1,3 +1,8 @@
+[nav-view="cached"]{
+	opacity:0;
+	transition: 1s ease opacity;
+}
+
 .tabs-top > .tabs{
 	background:transparent;
 	bottom:0;
@@ -10,27 +15,54 @@
 	bottom: 50px;
 }
 
-.tab-content, #login{
-	background: url('/img/18.jpg') no-repeat;
+.tab-content, #login, #signup {
+	background: url('../img/18.jpg') no-repeat;
 }
 
-#login .bar-header{
+#login .bar-header, #signup .bar-header{
 	background-color:transparent;
 }
 
-#login .bar-header .title{	
+#login .bar-header .title, #signup .bar-header .title{	
 	color:white;
 }
 
-#login button{
-	border: 1px solid white;
-	background:none;
+.no-lover{
+	font-size:1.2rem;
 }
 
-.tab-content .pane, .list .item{
+.logout{
+	text-align:right;
+	margin-top: 26px;
+	margin-right: 5px;
+}
+
+button, a.button, input.button{
+	border: 1px solid white !important;
+	background:rgba(0,0,0,0.5) !important;
+	margin-bottom:-15px !important;
+}
+
+.add-lover-button{
+	color: white;
+	border-radius:50%;
+	margin-top: 20px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.tab-content .pane, .list .item, .list-inset{
 	background-color:transparent;
 	color:white;
 	border:none;
+}
+
+.oauth{
+	text-align:right;
+}
+
+.list .item-input{
+	padding-right:18px;
 }
 
 .input-label{
@@ -73,14 +105,20 @@
 	border:none;
 }
 
-#setting-form button{
+#setting-form button, #setting-form input[type="button"]{
 	background-color:transparent;
 	border-color:white;
-	float:right;
 }
 
-.error .input-label{
+#login .spinner svg, #signup .spinner svg{
+	position: absolute;
+    top: 8px;
+    left: 20px;
+}
+
+.error{
 	color:#f56;
+	padding: 0 10px;
 }
  
 .ion-ios-heart {

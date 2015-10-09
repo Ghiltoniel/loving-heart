@@ -1,20 +1,20 @@
-<ion-view view-title="{{user || 'Home'}}" class="venter-container">  
+<ion-view view-title="Home" class="venter-container">  
 	<ion-content class="vertical-center">
 		<div class="Aligner">
 		  <div class="Aligner-item">
 			<ion-spinner ng-show="loading" class="loader-center"></ion-spinner>
-			<div ng-hide="no_lover || loading || error">
-				<i class="ion-ios-heart" ng-class="distance"></i>
+			<div ng-hide="$root.user.no_lover || $root.loading || $root.error">
+				<i class="ion-ios-heart" ng-class="$root.user.distance"></i>
 			</div>
-			<div ng-show="no_lover && !loading">
+			<div ng-show="$root.user.no_lover && !$root.loading" class="no-lover">
 				Vous n'avez pas encore de lover. 
 				<p>
-					<a class="button button-positive icon-left ion-home" href="#/app/settings">
-					  button-positive
+					<a class="button icon ion-heart add-lover-button" href="#/app/settings">
+						<i class="ion-plus"></i>
 					</a>
 				</p>
 			</div>
-			<div ng-show="error && !loading">
+			<div ng-show="$root.error && !$root.loading">
 				{{error}}
 			</div>
 		  </div>

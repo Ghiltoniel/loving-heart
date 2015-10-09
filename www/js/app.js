@@ -5,10 +5,15 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 var email, uid, loverId, loverEmail;
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', "firebase"])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', "firebase"])
 
 .run(function($ionicPlatform, $cordovaGeolocation) {
   $ionicPlatform.ready(function() {
+	  
+	Crittercism.init({
+	  appId: 'a651870c140740999df9b45d3dff234600444503', // Example: 47cc67093475061e3d95369d
+	  appVersion: '1.0' // Developer-provided application version
+	});
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -21,6 +26,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', "firebas
       StatusBar.styleDefault();
     }
   });
+  
+  try{
   
   document.addEventListener("deviceready", function () {
 	  
@@ -61,6 +68,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', "firebas
 			});
 
   }, false);
+  }catch(e){
+	  alert(JSON.stringify(e));
+  }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -74,12 +84,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', "firebas
   })
     .state('login', {
       url: '/login',
-      views: {
-        'login-tab': {
-          templateUrl: 'templates/login.html',
-          controller: 'LoginCtrl'
-        }
-      }
+	  templateUrl: 'templates/login.html',
+	  controller: 'LoginCtrl'
+    })
+	.state('signup', {
+      url: '/signup',
+	  templateUrl: 'templates/signup.html',
+	  controller: 'SignupCtrl'
     })
 	.state('app.home', {
       url: '/home',

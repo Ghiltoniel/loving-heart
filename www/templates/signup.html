@@ -1,0 +1,26 @@
+
+	<ion-view id="signup">
+	  <ion-header-bar>
+		<h1 class="title">Signup</h1>
+	  </ion-header-bar>
+	  <ion-content>
+		<form ng-submit="doSignup()">
+		  <div class="list">
+			<label class="item item-input">
+			  <span class="input-label">{{signup_error}}</span>
+			</label>
+			<label class="item item-input">
+			  <span class="input-label">Email</span>
+			  <input type="text" ng-model="signupData.username" ng-change="signup_error = '';">
+			</label>
+			<label class="item item-input">
+			  <span class="input-label">Password</span>
+			  <input type="password" ng-model="signupData.password" ng-change="signup_error = '';">
+			</label>
+			<label class="item">
+			  <button class="button button-block button-positive" type="submit"><ion-spinner ng-show="loading"></ion-spinner>Signup</button>
+			</label>
+		  </div>
+		</form>
+	  </ion-content>
+	</ion-view>
