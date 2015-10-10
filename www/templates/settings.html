@@ -6,7 +6,7 @@
 			  <div class="list">
 				<label class="item item-input">
 				  <span class="input-label">My lover's email</span>
-				  <input type="text" ng-model="lover.email" ng-change="$root.error_lover = ''">
+				  <input type="text" ng-model="$root.user.loverEmail" ng-change="$root.error_lover = ''">
 				</label>
 				<div class="error" ng-show="$root.error_lover">
 				  {{$root.error_lover}}

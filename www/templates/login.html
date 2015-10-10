@@ -7,7 +7,7 @@
 		<form ng-submit="doLogin()">
 		  <div class="list list-inset">
 			<label class="item item-input">
-			  <span class="input-label" style="white-space:nowrap">{{login_error}}</span>
+			  <span class="input-label">{{login_error}}</span>
 			</label>
 			<label class="item item-input">
 			  <span class="input-label">Email</span>
@@ -22,6 +22,8 @@
 			</label>
 			<label class="item oauth">
 			  <input type="button" class="button button-positive" ng-click="loginProvider('popup');" value="Facebook"/>
+			</label>
+			<label class="item oauth">
 			  <input type="button" class="button button-positive" ng-click="gotoSignup();" value="Sign up"/>
 			</label>
 		  </div>

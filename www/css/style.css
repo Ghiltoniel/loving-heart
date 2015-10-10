@@ -43,6 +43,10 @@ button, a.button, input.button{
 	margin-bottom:-15px !important;
 }
 
+.popup-buttons .button{
+	margin: 0 !important;
+}
+
 .add-lover-button{
 	color: white;
 	border-radius:50%;
@@ -132,18 +136,32 @@ button, a.button, input.button{
 
 .ion-ios-heart.close {
     animation: heartbeat 2s infinite;
+	font-size: 13rem;
+	color:#D34;
 }
 
 .ion-ios-heart.medium {
     animation: heartbeat 3s infinite;
+	font-size: 11rem;
+	color:#B34;
 }
 
 .ion-ios-heart.far {
     animation: heartbeat 5s infinite;
+	font-size: 9rem;
+	color:#934;
 }
 
 .ion-ios-heart.very-far {
-    animation: heartbeat 6s infinite;
+    animation: heartbeat 7s infinite;
+	font-size: 7rem;
+	color:#734;
+}
+
+.ion-ios-heart.very-far-away {
+    animation: heartbeat 9s infinite;
+	font-size: 5rem;
+	color:#634;
 }
 
 @keyframes heartbeat {

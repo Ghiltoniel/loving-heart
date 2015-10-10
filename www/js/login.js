@@ -1,6 +1,6 @@
 controllers
 
-.controller('LoginCtrl', function($scope, $ionicModal, $timeout, $firebaseArray, $location, $rootScope) {
+.controller('LoginCtrl', function($scope, $ionicModal, $timeout, $firebaseArray, $location, $rootScope, backend) {
 
   var firebaseRef = new Firebase("https://lover-position.firebaseio.com/");
 
@@ -20,6 +20,10 @@ controllers
 		}catch(e){
 			$scope.loading = false;
 			$scope.login_error = e.message;
+			
+			  if(!$scope.$$phase) {
+				$scope.$apply();
+			  }
 		}
     
 	};
@@ -50,9 +54,7 @@ controllers
 			$scope.login_error = error.message;
 			$scope.$apply();
 		} else {
-			email = $scope.loginData.username;
-			uid = authData.uid;
-			$rootScope.$broadcast('loggedIn');
+			backend.loadUser();
 			$location.path('/app/home');
 			$scope.$apply();
 		}

@@ -9,24 +9,18 @@ var controllers = angular.module('starter.controllers', [])
 })
 
 .controller('SettingsCtrl', function($scope, $stateParams, $location, $rootScope, backend) {
-		
-	$rootScope.$watch('user', function(user){		
-		$scope.lover = {
-			email: backend.user.loverEmail
-		};
-	})
-	
+			
 	$scope.save = function(){
-		if(!$scope.lover.email){
+		if(!$rootScope.user.loverEmail){
 			return;
 		}
-		if($scope.lover.email == backend.user.email){			
-			$scope.error = 'You can\'t be your on lover ! That is narcissistic, my friend !';
+		if($rootScope.user.loverEmail == backend.user.email){			
+			$scope.error = 'You can\'t be your own lover ! That is narcissistic, my friend !';
 			$scope.$apply();
 			return; 
 		}
 		
-		backend.saveLover($scope.lover.email);
+		backend.saveLover($scope.user.loverEmail);
 	}
 	
 	$scope.logout = function(){

@@ -1,6 +1,6 @@
 controllers
 
-.controller('SignupCtrl', function($scope, $ionicModal, $timeout, $firebaseArray, $location) {
+.controller('SignupCtrl', function($scope, $ionicModal, $timeout, $firebaseArray, $location, backend) {
 
   var firebaseRef = new Firebase("https://lover-position.firebaseio.com/");
 
@@ -54,7 +54,7 @@ controllers
 						  if (error) {
 							$scope.signup_error = "Data could not be saved." + error;
 						  } else {
-							$rootScope.$broadcast('loggedIn');
+							backend.loadUser();
 							$location.path('/app/home');
 							$scope.$apply();
 						  }

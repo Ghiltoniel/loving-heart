@@ -1,15 +1,12 @@
 var services = angular.module('starter.services', [])
 
-.factory('backend', function($rootScope, $location, $cordovaGeolocation) {
+.factory('backend', function($rootScope, $location, $cordovaGeolocation, $ionicPopup) {
 	var user = {};
 	var loadedCallbacks = [];
 	
 	var firebaseRef = new Firebase("https://lover-position.firebaseio.com/");	
 	var usersRef = firebaseRef.child("users");
 	var meRef;
-	
-	$rootScope.$on('loggedIn', loadUser);
-	$rootScope.$on('loverSet', loadUser);
 		
 	var loadUser = function(){
 	  $rootScope.loading = true;
@@ -42,11 +39,13 @@ var services = angular.module('starter.services', [])
 		meRef = firebaseRef.child('users/' + user.uid);
 		
 		$rootScope.loading = true;
+		$rootScope.user = user;
 		meRef.on("value", function(snapshot) {
 			if(!snapshot.val().loverId)
 			{
 				$rootScope.loading = false;
 				user.no_lover = true;
+				return;
 			}
 			user.no_lover = false;
 			user.loverId = snapshot.val().loverId;
@@ -58,30 +57,18 @@ var services = angular.module('starter.services', [])
 				
 				var geoFire = new GeoFire(userRef);
 				geoFire.get('location').then(function(data) {
-					if(!data){
-						$rootScope.loading = false;
-						$rootScope.no_data = false;
-						return;
-					}
+				  if(!data){
+					$rootScope.loading = false;
+					$rootScope.no_data = false;
+					return;
+				  }
 					
-					var posOptions = {timeout: 10000, enableHighAccuracy: false};
-					
-					$cordovaGeolocation
-						.getCurrentPosition(posOptions)
-						.then(function (position) {
-							  var lat  = position.coords.latitude
-							  var lng = position.coords.longitude
-							  
-							  var d = Math.round(distance(data[0], data[1], lat, lng, 'K'));
-							  user.distance = d < 1 ? 'very-close' : d < 5 ? 'close' : d < 20 ? 'medium' : d < 50 ? 'far' : 'very-far';
-							  $rootScope.user = user;
-							  $rootScope.loading = false;
-							  if(!$rootScope.$$phase) {
-								$rootScope.$apply();
-							  }
-						}, function(err) {
-						  // error
-						});
+				  user.loverLat  = data[0];
+				  user.loverLng = data[1];
+				  $rootScope.loading = false;
+				  if(!$rootScope.$$phase) {
+					$rootScope.$apply();
+				  }
 				}, function(error) {
 				    alert("Error: " + error);
 				    $rootScope.loading = false;
@@ -122,22 +109,6 @@ var services = angular.module('starter.services', [])
 			  }
 		  }
 		});	
-	}
-	
-	function distance(lat1, lon1, lat2, lon2, unit) {
-		var radlat1 = Math.PI * lat1/180
-		var radlat2 = Math.PI * lat2/180
-		var radlon1 = Math.PI * lon1/180
-		var radlon2 = Math.PI * lon2/180
-		var theta = lon1-lon2
-		var radtheta = Math.PI * theta/180
-		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-		dist = Math.acos(dist)
-		dist = dist * 180/Math.PI
-		dist = dist * 60 * 1.1515
-		if (unit=="K") { dist = dist * 1.609344 }
-		if (unit=="N") { dist = dist * 0.8684 }
-		return dist;
 	}
 	
 	loadUser();

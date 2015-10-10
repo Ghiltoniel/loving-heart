@@ -7,7 +7,7 @@
 var email, uid, loverId, loverEmail;
 angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', "firebase"])
 
-.run(function($ionicPlatform, $cordovaGeolocation) {
+.run(function($ionicPlatform, $cordovaGeolocation, backend, $ionicPopup, $rootScope) {
   $ionicPlatform.ready(function() {
 	  
 	Crittercism.init({
@@ -29,19 +29,21 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
   
   try{
   
-  document.addEventListener("deviceready", function () {
-	  
+	  document.addEventListener("deviceready", function () {
+		  loadGPS();
+	  }, false);
+  }catch(e){
+	  alert(JSON.stringify(e));
+  }
+  
+  
+	function loadGPS(){
 		var firebaseRef = new Firebase("https://lover-position.firebaseio.com/");		
 		var usersRef = firebaseRef.child("users");
 		
 		var authData = firebaseRef.getAuth();
 		if (authData) {
-		   email = authData.password.email;
 		   uid = authData.uid; 
-		   
-		   usersRef.child(uid).update({
-			 email: email
-		   });
 		}
 		
 		var watchOptions = {
@@ -53,12 +55,30 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 		watch.then(
 			null,
 			function(err) {
+				backend.user.no_gps = true;
+				
+				 $rootScope.no_gps_data = true;
+				 var alertPopup = $ionicPopup.alert({
+					 title: 'No GPS signal!',
+					 template: 'Please activate your GPS'
+				 });
+				 alertPopup.then(function(res) {
+					   
+				 });
 			},
 			function(position) {
 				var lat  = position.coords.latitude
 				var lng = position.coords.longitude
+				backend.user.lat = lat;
+				backend.user.lng = lng;
+				backend.user.no_gps = false;
 				
-				if(typeof(email) != 'undefined'){					
+				  
+				var d = Math.round(distance(backend.user.lat, backend.user.lng, backend.user.loverLat, backend.user.loverLng, 'K'));
+				if($rootScope.user){
+					$rootScope.user.distance = d < 1 ? 'very-close' : d < 5 ? 'close' : d < 20 ? 'medium' : d < 50 ? 'far' : d < 80 ? 'very-far' : 'very-far-away';
+				}
+				if(typeof(uid) != 'undefined'){					
 					var geoFire = new GeoFire(usersRef.child(uid));
 					geoFire.set('location', [lat, lng]).then(function() {
 					}, function(error) {
@@ -67,10 +87,31 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 				}
 			});
 
-  }, false);
-  }catch(e){
-	  alert(JSON.stringify(e));
-  }
+	}
+  
+  
+	
+	function distance(lat1, lon1, lat2, lon2, unit) {
+		var radlat1 = Math.PI * lat1/180
+		var radlat2 = Math.PI * lat2/180
+		var radlon1 = Math.PI * lon1/180
+		var radlon2 = Math.PI * lon2/180
+		var theta = lon1-lon2
+		var radtheta = Math.PI * theta/180
+		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		dist = Math.acos(dist)
+		dist = dist * 180/Math.PI
+		dist = dist * 60 * 1.1515
+		if (unit=="K") { dist = dist * 1.609344 }
+		if (unit=="N") { dist = dist * 0.8684 }
+		return dist;
+	}
+	
+	$ionicPlatform.on('resume', function(){
+       if(backend.user.no_gps){
+		   loadGPS();
+	   }
+    });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

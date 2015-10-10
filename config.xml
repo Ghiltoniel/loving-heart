@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.loverposition236279" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>LoverPosition</name>
+<widget id="com.lovespounding.android" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Love\'s Pounding</name>
   <description>
-        An Ionic Framework and Cordova project.
+        An app to visualize your love getting closer
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+  <author email="contact@guillaumejacquart.com" href="http://www.guillaumejacquart.com/">
+      Guillaume Jacquart
     </author>
   <content src="index.html"/>
   <access origin="*"/>
