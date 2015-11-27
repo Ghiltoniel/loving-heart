@@ -11,6 +11,9 @@
 				<div class="error" ng-show="$root.error_lover">
 				  {{$root.error_lover}}
 				</div>
+				<div ng-show="$root.user.loverId" class="user-validated {{ $root.user.loverValidated }}">
+				  {{'Your lover ' + ($root.user.loverValidated ? 'has ' : 'has not ') + 'validated you as his lover'}}
+				</div>
 				<div class="logout">
 				  <ion-spinner ng-show="$root.loading"></ion-spinner>
 				  <button class="button button-positive icon-left ion-ios-checkmark-outline" type="submit">Enregistrer</button>

@@ -55,6 +55,7 @@ controllers
 			$scope.$apply();
 		} else {
 			backend.loadUser();
+			backend.loadHeart();
 			$location.path('/app/home');
 			$scope.$apply();
 		}

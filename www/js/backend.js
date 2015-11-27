@@ -54,6 +54,7 @@ var services = angular.module('starter.services', [])
 		
 			userRef.on("value", function(snapshot) {
 				user.loverEmail = snapshot.val().email;
+				user.loverValidated = snapshot.val().loverId == user.uid;
 				
 				var geoFire = new GeoFire(userRef);
 				geoFire.get('location').then(function(data) {
@@ -115,6 +116,7 @@ var services = angular.module('starter.services', [])
 	
 	return {
 		loadUser: loadUser,
+		loadHeart: loadHeart,
 		user: user,
 		loadedCallbacks: loadedCallbacks,
 		saveLover: saveLover,

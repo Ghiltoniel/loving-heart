@@ -3,7 +3,7 @@ set "version = 22.0.1"
 
 del "production.apk"
 
-rem cordova build --release android
+CALL cordova build --release android
 
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore 	.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk production
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore 	production.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk alias_name
 "%zip_align_path%" -v 4 platforms/android/build/outputs/apk/android-release-unsigned.apk production.apk

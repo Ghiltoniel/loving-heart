@@ -78,8 +78,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 				if($rootScope.user){
 					$rootScope.user.distance = d < 1 ? 'very-close' : d < 5 ? 'close' : d < 20 ? 'medium' : d < 50 ? 'far' : d < 80 ? 'very-far' : 'very-far-away';
 				}
-				if(typeof(uid) != 'undefined'){					
-					var geoFire = new GeoFire(usersRef.child(uid));
+				if(typeof(backend.user.uid) != 'undefined'){					
+					var geoFire = new GeoFire(usersRef.child(backend.user.uid));
 					geoFire.set('location', [lat, lng]).then(function() {
 					}, function(error) {
 					  alert("Error: " + error);

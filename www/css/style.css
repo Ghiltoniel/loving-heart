@@ -124,6 +124,14 @@ button, a.button, input.button{
 	color:#f56;
 	padding: 0 10px;
 }
+
+.user-validated.true{
+	color:#5f6;
+}
+
+.user-validated{
+	color:#f56;
+}
  
 .ion-ios-heart {
 	font-size: 15rem;

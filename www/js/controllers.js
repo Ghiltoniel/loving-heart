@@ -15,12 +15,11 @@ var controllers = angular.module('starter.controllers', [])
 			return;
 		}
 		if($rootScope.user.loverEmail == backend.user.email){			
-			$scope.error = 'You can\'t be your own lover ! That is narcissistic, my friend !';
-			$scope.$apply();
+			$rootScope.error_lover = 'You can\'t be your own lover ! That is narcissistic, my friend !';
 			return; 
 		}
 		
-		backend.saveLover($scope.user.loverEmail);
+		backend.saveLover($scope.user.loverEmail.toLowerCase());
 	}
 	
 	$scope.logout = function(){
