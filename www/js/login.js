@@ -1,6 +1,6 @@
 controllers
 
-.controller('LoginCtrl', function($scope, $ionicModal, $timeout, $firebaseArray, $location, $rootScope, backend) {
+.controller('LoginCtrl', function($scope, $ionicModal, $ionicPush, $timeout, $firebaseArray, $location, $rootScope, backend) {
 
   var firebaseRef = new Firebase("https://lover-position.firebaseio.com/");
 
@@ -54,6 +54,27 @@ controllers
 			$scope.login_error = error.message;
 			$scope.$apply();
 		} else {
+			
+			var ionicUser = Ionic.User.current();
+			$ionicPush.init({
+			  "debug": true,
+			  "onNotification": function(notification) {
+				var payload = notification.payload;
+				console.log(notification, payload);
+			  },
+			  "onRegister": function(pushToken) {
+				  console.log('Registered token:', pushToken.token);
+				  
+				  if (!ionicUser.id) {
+					  ionicUser.id = authData.uid;
+				  }
+				  ionicUser.addPushToken(pushToken);
+				  ionicUser.save();
+			  }
+			});
+
+			$ionicPush.register();
+			
 			backend.loadUser();
 			backend.loadHeart();
 			$location.path('/app/home');

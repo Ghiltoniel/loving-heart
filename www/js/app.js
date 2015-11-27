@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 var email, uid, loverId, loverEmail;
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', "firebase"])
+angular.module('starter', ['ionic','ionic.service.core', 'ionic.service.push', 'ngCordova', 'starter.controllers', 'starter.services', "firebase"])
 
 .run(function($ionicPlatform, $cordovaGeolocation, backend, $ionicPopup, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -25,6 +25,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+	
+	Ionic.io();
   });
   
   try{
