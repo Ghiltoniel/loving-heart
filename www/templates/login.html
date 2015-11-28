@@ -7,15 +7,15 @@
 		<form ng-submit="doLogin()">
 		  <div class="list list-inset">
 			<label class="item item-input">
-			  <span class="input-label">{{login_error}}</span>
+			  <span class="input-label error">{{login_error}}</span>
 			</label>
 			<label class="item item-input">
 			  <span class="input-label">Email</span>
-			  <input type="text" ng-model="loginData.username" ng-change="login_error = '';">
+			  <input type="text" ng-model="loginData.username" ng-change="reset();">
 			</label>
 			<label class="item item-input">
 			  <span class="input-label">Password</span>
-			  <input type="password" ng-model="loginData.password" ng-change="login_error = '';">
+			  <input type="password" ng-model="loginData.password" ng-change="reset();">
 			</label>
 			<label class="item">
 			  <button class="button button-block button-positive" type="submit"><ion-spinner ng-show="loading"></ion-spinner>Log in</button>

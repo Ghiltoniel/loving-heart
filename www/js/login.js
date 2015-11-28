@@ -9,8 +9,8 @@ controllers
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
-		$scope.login_error = '';
 		$scope.loading = true;
+		$scope.login_error = '';
 	    var ref = new Firebase("https://lover-position.firebaseio.com/");
 		try{
 			ref.authWithPassword({
@@ -27,6 +27,14 @@ controllers
 		}
     
 	};
+	
+	$scope.reset = function(){
+		$scope.login_error = '';
+	}
+	
+	$scope.$watch('login_error', function(newValue, oldValue) {
+		console.log('new value : ' + newValue + ', old value : ' + oldValue);
+	});
 	
 	$scope.gotoSignup = function(){
 		$location.path('/signup');		

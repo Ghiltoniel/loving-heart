@@ -9,7 +9,7 @@ controllers
 
   // Perform the login action when the user submits the login form
   $scope.doSignup = function() {
-		$scope.login_error = '';
+		$scope.signup_error = '';
 		$scope.loading = true;
 	    var ref = new Firebase("https://lover-position.firebaseio.com/");
 		try{
@@ -74,4 +74,8 @@ controllers
 		}
     
   };
+  
+  $scope.reset = function(){
+	  $scope.signup_error = '';
+  }
 });
